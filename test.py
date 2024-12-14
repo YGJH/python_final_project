@@ -33,29 +33,27 @@ class SpeechToText:
     def __call__(self):
         return self.listen()    
 
+chinese_voice_id = r'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_ZH-TW_HANHAN_11.0'
 # Convert text to speech
 def text_to_speech(command):
     engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    # 選擇中文語音
-    for voice in voices:
-        try:
-            if 'zh' in voice.languages[0]:
-                engine.setProperty('voice', voice.id)
-                break
-        except (AttributeError, IndexError):
-            continue
-    engine.setProperty('rate', 150)  # 語速
-    engine.setProperty('volume', 1.0)  # 音量
-    engine.say(command) 
-    engine.runAndWait()
+    # voices = engine.getProperty('voices')
 
+    # for voice in voices:
+    #     if voice.name == "Microsoft Hanhan Desktop - Chinese (Taiwan)":
+    #         print(f"使用語音: {voice.i}")
+    engine.setProperty('voice', chinese_voice_id)
+    #         break
+    engine.setProperty('rate', 190)  # 語速
+    engine.setProperty('volume', 1.0)  # 音量
+    engine.say(command)
+    engine.runAndWait()
 # 獲取 Ollama 回應
 def get_ollama_response(prompt):
     try:
         # 在提示前添加指示，請求中文回應
         chinese_prompt = f"請用中文回答：{prompt}"
-        response = ollama.generate(prompt=chinese_prompt, model="llama3:8b")
+        response = ollama.generate(prompt=chinese_prompt, model="llama3.2")
         # 檢查回應類型並返回 'response' 屬性
         if hasattr(response, 'response') and isinstance(response.response, str):
             return response.response
@@ -78,6 +76,7 @@ def chatbot():
         elif user_input:
             # 傳送使用者輸入給 Ollama 並獲取回應
             ollama_response = get_ollama_response(user_input)
+            print(f'您說: {user_input}')
             # 僅顯示 Ollama 的回應
             print(f"Ollama 回應: {ollama_response}")
             # 將 Ollama 的回應轉換為語音
