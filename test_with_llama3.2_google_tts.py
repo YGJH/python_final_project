@@ -7,9 +7,25 @@ from gtts import gTTS
 import os
 import pygame
 import ollama
+import itertools
+import threading
+import time
+import sys
 
 # 初始化 pygame
 pygame.mixer.init()
+
+# 小動畫
+
+
+def animate():
+    for c in itertools.cycle(['|', '/', '-', '\\']):
+        if done:
+            break
+        sys.stdout.write('\r思考中 ' + c)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    sys.stdout.write('\r完成!     \n')
 
 # 語音轉文字
 
@@ -54,11 +70,15 @@ def text_to_speech(command):
 
 
 def get_ollama_response(prompt):
+    global done
+    done = False
+    t = threading.Thread(target=animate)
+    t.start()
     try:
         # 在提示前添加指示，請求中文回應
-        chinese_prompt = f"請用中文回答：{prompt}"
+        chinese_prompt = f"請用中文回答：{prompt}，不超過20字"
         response = ollama.generate(
-            prompt=chinese_prompt, model="llama3.2:latest")
+            prompt=chinese_prompt, model="adsfaaron/taide-lx-7b-chat:q5")
         # 檢查回應類型並返回 'response' 屬性
         if hasattr(response, 'response') and isinstance(response.response, str):
             return response.response
@@ -69,6 +89,9 @@ def get_ollama_response(prompt):
     except Exception as e:
         print(f"Ollama 回應錯誤: {e}")
         return "抱歉，我無法獲取回應。"
+    finally:
+        done = True
+        t.join()
 
 # 主聊天機器人功能
 
