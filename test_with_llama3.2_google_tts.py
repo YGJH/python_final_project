@@ -5,8 +5,11 @@ import numpy as np
 import speech_recognition as sr
 from gtts import gTTS
 import os
-from playsound import playsound
+import pygame
 import ollama
+
+# 初始化 pygame
+pygame.mixer.init()
 
 # 語音轉文字
 
@@ -40,7 +43,11 @@ class SpeechToText:
 def text_to_speech(command):
     tts = gTTS(text=command, lang='zh')
     tts.save("response.mp3")
-    playsound("response.mp3")
+    pygame.mixer.music.load("response.mp3")
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
+    pygame.mixer.music.unload()  # 確保音頻文件已經完全卸載
     os.remove("response.mp3")
 
 # 獲取 Ollama 回應
