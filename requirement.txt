@@ -1,9 +1,0 @@
-pyttsx3
-ollama
-pygame
-gtts
-transformers
-torch
-SpeechRecognition
-google-api-python-client
-google-auth
