@@ -112,7 +112,7 @@ def fetchLinks(parm):
 
 def fetch_jable_data(urls):
     links = []
-    for i in range(1,2):
+    for i in range(1,186):
         url = urls+str(i)+'/'
         print(f"正在爬取: {url}")
         page_source = fetch_page_source(url, port=9322)
