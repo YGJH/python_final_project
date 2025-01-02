@@ -1,0 +1,23 @@
+{
+  "name": "discord-chatbot",
+  "version": "1.0.0",
+  "description": "A Discord chatbot that interacts with LLM.",
+  "main": "src/bot.py",
+  "scripts": {
+    "start": "python src/bot.py"
+  },
+  "dependencies": {
+    "discord.py": "^1.7.3",
+    "requests": "^2.25.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "keywords": [
+    "discord",
+    "chatbot",
+    "llm"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
