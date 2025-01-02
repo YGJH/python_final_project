@@ -24,3 +24,7 @@ s3fs 2023.4.0 requires fsspec==2023.4.0, but you have fsspec 2024.9.0 which is i
 conda-repo-cli 1.0.75 requires clyent==1.2.1, but you have clyent 1.2.2 which is incompatible.
 conda-repo-cli 1.0.75 requires PyYAML==6.0.1, but you have pyyaml 6.0 which is incompatible.
 conda-repo-cli 1.0.75 requires requests==2.31.0, but you have requests 2.32.3 which is incompati
+
+:::info
+請直接python gui_app.py 進行執行
+:::
